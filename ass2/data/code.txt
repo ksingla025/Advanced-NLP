@@ -1,0 +1,5 @@
+
+ciphertext A: er vsm gtrrxr upit vst imyoa dvormvr fodvpbrtd s esu yp trqsot oy
+
+plaintext B: a quick brown fox jumps over the lazy dog
+ciphertext B: s wiovl ntpem gpc kizqd pbrt yjr asxu fph
