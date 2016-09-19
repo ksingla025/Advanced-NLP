@@ -1,10 +1,10 @@
 #!/use/bin/python
 
 import sys,re
+from collections import Counter
 
 
 data = open(sys.argv[1],'r').readlines()
-from collections import Counter
 
 
 #this function creates a fst for a dictionary
