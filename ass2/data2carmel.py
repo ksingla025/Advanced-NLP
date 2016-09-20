@@ -79,11 +79,12 @@ def text2ngram(N,input_file):
 		line = line.strip().split("/")		
 		if line[0] == ".":
 			tag.append(line[1].strip())
+			tag.append("*e*")
 			for i in range(len(tag)-N+1):
 				NList.append(" ".join(tag[i:i+N]))
 #			out_data.write('"' + '" "'.join(sent) + '"\n')
 #			out_data.write('"' + '" "'.join(tag) + '"\n')
-			tag = []
+			tag = ["*e*"]
 		else:
 			tag.append(line[1].strip())	
 	ngram_cnt = Counter(NList)
@@ -91,6 +92,23 @@ def text2ngram(N,input_file):
 	for value in ngram_cnt:
 			ngram_cnt[value] = float(ngram_cnt[value]) / total
 	return ngram_cnt
+
+def bidic2fsa(input_dic):
+	fst = "56\n"
+	count = 0
+	tag_cnt = 0
+	tag_dic = {}
+	for key in input_dic.keys():
+		if key.split()[0] == '*e*':
+			tag_cnt = tag_cnt + 1
+			tag_dic[tag_cnt] = key.split()[1]
+			fst = fst + '(0 ('+str(tag_cnt)+' "'+key.split()[1]+'" '+str(input_dic[key])+'))\n'
+	
+	for key in input_dic.keys():
+		if key.split()[1] == 		
+		if key.split()[1] == '*e*':
+
+	return fst
 
 def dic2fsa(input_dic):
 	fst = "0\n"
