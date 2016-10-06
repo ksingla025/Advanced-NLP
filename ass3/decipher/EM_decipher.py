@@ -76,6 +76,10 @@ class EM_decipher(object):
  			final[key]= {k: v / total for k, v in final[key].iteritems()}
  			total = 0.0
 
+ 		''' cube all probabilities '''
+ 		for key in final.keys():
+ 			for value in final[key].keys():
+ 				final[key][value] = final[key][value]*final[key][value]*final[key][value]
  		return final
 
 	def get_start_prob(self):
@@ -215,7 +219,7 @@ if __name__ == "__main__":
 	EM = EM_decipher("../data/cipher.data.toy","../data/english.data")
 	prob_je = EM.em_learn()
 	viterbi = vt(prob_je,"../data/english.data")
-	viterbi.viterbi_search("MTBS SQTVTCEQZV TDSTNESM TX BZOZ WSQVEGS XTQJM TG TDS ITNMSGEGC ZCNEQJVTJNZV ZGW NSMTJNQS QTGWETETGM EG TDSTNESM")
+	viterbi.viterbi_search("MTBS SQTVTCEQZV TDSTNESM TX BZOZ WSQVEGS XTQJM TG TDS ITNMSGEGC ZCNEQJVTJNZV ZGW NSMTJNQS QTGWETETGM EG TDS VZTS QVZMMEQ YSNETW ET IZM TNECEGZVVO TDTJCDT TDZT TDS BZRTNETO TX BZOZ ZCNEQJVTJNS IZM")
 
 #	print EM.states
 #	print EM.start_probability 
