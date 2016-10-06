@@ -30,16 +30,6 @@ class EM_decipher(object):
  
  		self.emission_probability = self.init_emission_prob()
 
- #		print self.states
- #		print self.transition_probability
- #		print self.emission_probability
-
- #		print len(list(self.cipher_data[0].strip()))
- #		l = self.fwd_bkw(list(self.cipher_data[0].strip()),self.states,self.start_probability,self.transition_probability,self.emission_probability,self.end_state)
- #		print len(l)
- #		for line in self.example():
- #			print line
-
 	def example(self):
 		return self.fwd_bkw(list(self.cipher_data[0].strip()),self.states,self.start_probability,self.transition_probability,self.emission_probability,self.end_state)
  	
@@ -50,9 +40,9 @@ class EM_decipher(object):
  			print "======== Iteration :",iteration
 
  			posterior = self.fwd_bkw(list(self.cipher_data[0].strip()),self.states,self.start_probability,self.transition_probability,self.emission_probability,self.end_state)
- #			print posterior
+
  			cipher = list(self.cipher_data[0].strip())
- 			print cipher
+
  			for i in range(0,len(cipher)):
 
  				
@@ -177,12 +167,13 @@ class EM_decipher(object):
  
 		fwd = []
 		f_prev = {}
+
 		# forward part of the algorithm
 		for i, x_i in enumerate(x):
-#			print i,x_i
+
 			f_curr = {}
 			for st in states:
-#				print st
+
 				if i == 0:
 					# base case for the forward part
 					prev_f_sum = a_0[st]
@@ -195,7 +186,7 @@ class EM_decipher(object):
 			f_prev = f_curr
 
 		p_fwd = sum(f_curr[k]*a[k][end_st] for k in states)
-#		p_fwd = sum(f_curr[k]*a[k][end_st] for k in states)
+
  
 		bkw = []
 		b_prev = {}
@@ -203,7 +194,7 @@ class EM_decipher(object):
 		# backward part of the algorithm
 		y = x
 		y.extend(['None'])
-		print "len",len(x)
+		
 		for i, x_i_plus in enumerate(reversed(y[1:])):
 			b_curr = {}
 			for st in states:
@@ -213,22 +204,16 @@ class EM_decipher(object):
 
 				else:
 					b_curr[st] = sum(a[st][l]*e[l][x_i_plus]*b_prev[l] for l in states)
-#					print b_curr[st]
- 
- #			print b_curr
+
 			bkw.insert(0,b_curr)
 			b_prev = b_curr
  
 		p_bkw = sum(a_0[l] * e[l][x[0]] * b_curr[l] for l in states)
  
- #		print p_fwd
- #		print bkw
 		# merging the two parts
 		posterior = []
 		for i in range(L):
-	#		for st in states:
-	#			print fwd[i][st]
-	#			print bkw[i][st]
+
 			posterior.append({st: fwd[i][st]*bkw[i][st]/p_fwd for st in states})
  
 #		assert p_fwd == p_bkw

@@ -10,7 +10,7 @@ class viterbi(object):
 		
 		self.word2tag = {}
 		self.word2tag = word2tag
-		print self.word2tag
+
 		self.text2unigram = text2ngram(1,tag_file)
 #		print self.text2unigram
 		self.text2bigram = text2ngram(2,tag_file)
@@ -33,18 +33,11 @@ class viterbi(object):
 			tag_list = self.text2unigram.keys()
 			tag_prob = self.text2unigram.values()
 
-			print tag_prob
-			print tag_list
-
 			Q = [[0 for i in range(M)] for j in range(N)]
 			best_pred = [[0 for i in range(M)] for j in range(N)]
 		
 			''' initilization for starting word by choosing most probabble tag probabilities'''
 			for j in range(0,M):
-				print tag_prob[j]
-				print tag_list[j]
-				print input_text[0]
-				print self.word2tag[input_text[0]][tag_list[j]]
 				Q[0][j] = tag_prob[j] * self.word2tag[input_text[0]][tag_list[j]]
 		
 			''' setting back parameters for others '''
@@ -106,7 +99,3 @@ def text2ngram(N,input_file):
 	for value in ngram_cnt:
 			ngram_cnt[value] = float(ngram_cnt[value]) / total
 	return ngram_cnt
-								
-#vit = viterbi(sys.argv[1])
-#print vit.word2tag
-#vit.viterbi_search("how are you")
