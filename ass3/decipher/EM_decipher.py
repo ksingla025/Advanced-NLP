@@ -44,8 +44,6 @@ class EM_decipher(object):
  			cipher = list(self.cipher_data[0].strip())
 
  			for i in range(0,len(cipher)):
-
- 				
  				for key in posterior[i].keys():
  					if key not in prob_je.keys():
  						prob_je[key] = {}
@@ -80,8 +78,6 @@ class EM_decipher(object):
 
  		return final
 
-
-
 	def get_start_prob(self):
 		start = []
 		for line in self.english_data:
@@ -112,7 +108,6 @@ class EM_decipher(object):
 			if k[1] == "\n":
 				k = list(k)
 				k[1] = "*end*"
-
 			bigram_list.append((k[0], k[1]))				
 
 #		print bigram_list
@@ -173,13 +168,11 @@ class EM_decipher(object):
 
 			f_curr = {}
 			for st in states:
-
 				if i == 0:
 					# base case for the forward part
 					prev_f_sum = a_0[st]
 				else:
 					prev_f_sum = sum(f_prev[k]*a[k][st] for k in states)
- 
 				f_curr[st] = e[st][x_i] * prev_f_sum
  
 			fwd.append(f_curr)
@@ -187,21 +180,19 @@ class EM_decipher(object):
 
 		p_fwd = sum(f_curr[k]*a[k][end_st] for k in states)
 
- 
 		bkw = []
 		b_prev = {}
 		
 		# backward part of the algorithm
 		y = x
 		y.extend(['None'])
-		
+
 		for i, x_i_plus in enumerate(reversed(y[1:])):
 			b_curr = {}
 			for st in states:
 				if i == 0:
 					# base case for backward part
 					b_curr[st] = a[st][end_st]
-
 				else:
 					b_curr[st] = sum(a[st][l]*e[l][x_i_plus]*b_prev[l] for l in states)
 
@@ -213,7 +204,6 @@ class EM_decipher(object):
 		# merging the two parts
 		posterior = []
 		for i in range(L):
-
 			posterior.append({st: fwd[i][st]*bkw[i][st]/p_fwd for st in states})
  
 #		assert p_fwd == p_bkw
